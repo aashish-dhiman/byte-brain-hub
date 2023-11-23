@@ -92,7 +92,7 @@ const Card = ({
                 pathName === "/profile" && (
                     <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
                         <p
-                            className="font-inter text-sm green_gradient cursor-pointer"
+                            className="font-inter text-sm blue_gradient cursor-pointer"
                             onClick={handleEdit}
                         >
                             Edit
