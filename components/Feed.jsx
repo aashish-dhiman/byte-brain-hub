@@ -10,6 +10,7 @@ const CardList = ({ data, handleTagClick }) => {
                 <Card
                     key={post._id}
                     post={post}
+                    createdAt={post.createdAt}
                     handleTagClick={handleTagClick}
                 />
             ))}
