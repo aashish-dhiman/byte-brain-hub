@@ -20,22 +20,24 @@ const CardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
     const [allPosts, setAllPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     // Search states
     const [searchText, setSearchText] = useState("");
     const [searchTimeout, setSearchTimeout] = useState(null);
     const [searchedResults, setSearchedResults] = useState([]);
 
-    const fetchPosts = async () => {
-        const response = await fetch("/api/prompt");
-        const data = await response.json();
-
-        setAllPosts(data);
-    };
-
     useEffect(() => {
+        const fetchPosts = async () => {
+            const response = await fetch("/api/prompt");
+            const data = await response.json();
+
+            setAllPosts(data);
+            setIsLoading(false);
+        };
+
         fetchPosts();
-    }, []);
+    },[]);
 
     const filterPrompts = (searchText) => {
         const regex = new RegExp(searchText, "i"); // 'i' flag for case-insensitive search
@@ -81,16 +83,18 @@ const Feed = () => {
             </form>
 
             {/* All Prompts */}
-            {searchText ? (
+
+            {isLoading ? (
+                <div className="flex items-center mt-20">
+                    <span>Loading...</span>
+                </div>
+            ) : searchText ? (
                 <CardList
                     data={searchedResults}
                     handleTagClick={handleTagClick}
                 />
             ) : (
-                <CardList
-                    data={allPosts}
-                    handleTagClick={handleTagClick}
-                />
+                <CardList data={allPosts} handleTagClick={handleTagClick} />
             )}
         </section>
     );

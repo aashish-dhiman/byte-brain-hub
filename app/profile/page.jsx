@@ -11,6 +11,7 @@ const MyProfile = () => {
     const { data: session } = useSession();
 
     const [myPosts, setMyPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -20,6 +21,7 @@ const MyProfile = () => {
             const data = await response.json();
 
             setMyPosts(data);
+            setIsLoading(false);
         };
 
         if (session?.user.id) fetchPosts();
@@ -56,7 +58,11 @@ const MyProfile = () => {
         }
     };
 
-    return (
+    return isLoading ? (
+        <div className="flex items-center mt-20">
+            <span>Loading...</span>
+        </div>
+    ) : (
         <Profile
             name="My"
             desc="Welcome to your personalized profile page. Share your exceptional prompts and inspire others with the power of your imagination."
