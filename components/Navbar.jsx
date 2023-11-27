@@ -68,7 +68,8 @@ const Navbar = () => {
                                 <button
                                     type="button"
                                     key={provider.name}
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                        e.preventDefault();
                                         signIn(provider.id);
                                     }}
                                     className="black_btn"
@@ -132,7 +133,8 @@ const Navbar = () => {
                                 <button
                                     type="button"
                                     key={provider.name}
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                        e.preventDefault();
                                         signIn(provider.id);
                                     }}
                                     className="black_btn"
