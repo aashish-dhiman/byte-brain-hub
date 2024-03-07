@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 
 import Form from "@components/Form";
+import { revalidatePath } from "next/cache";
 
 const CreatePrompt = () => {
     const router = useRouter();
@@ -13,6 +14,7 @@ const CreatePrompt = () => {
 
     useEffect(() => {
         if (!session) {
+            revalidatePath("/");
             redirect("/");
         }
     }, [session, router]);
