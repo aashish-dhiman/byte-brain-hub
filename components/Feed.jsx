@@ -34,7 +34,6 @@ const Feed = () => {
                 cache: "no-cache",
             });
             const data = await response.json();
-            revalidatePath("/");
             setAllPosts(data);
             setIsLoading(false);
         };

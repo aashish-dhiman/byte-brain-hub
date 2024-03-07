@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { redirect } from "next/navigation";
 
 import Form from "@components/Form";
+import { revalidatePath } from "next/cache";
 
 const EditPrompt = () => {
     const router = useRouter();
@@ -15,7 +16,7 @@ const EditPrompt = () => {
 
     const [submitting, setIsSubmitting] = useState(false);
     const [post, setPost] = useState({ prompt: "", tag: "" });
-    
+
     useEffect(() => {
         if (!session) {
             redirect("/");
@@ -49,6 +50,8 @@ const EditPrompt = () => {
                 }),
             });
             if (response.ok) {
+                revalidatePath("/profile");
+                revalidatePath("/");
                 router.push("/profile");
             }
         } catch (error) {
