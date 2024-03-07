@@ -16,7 +16,10 @@ const MyProfile = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             const response = await fetch(
-                `/api/users/${session?.user.id}/posts`
+                `/api/users/${session?.user.id}/posts`,
+                {
+                    cache: "no-store",
+                }
             );
             const data = await response.json();
 

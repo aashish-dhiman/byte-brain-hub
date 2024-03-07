@@ -50,8 +50,6 @@ const EditPrompt = () => {
                 }),
             });
             if (response.ok) {
-                revalidatePath("/profile");
-                revalidatePath("/");
                 router.push("/profile");
             }
         } catch (error) {

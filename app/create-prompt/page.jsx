@@ -36,8 +36,6 @@ const CreatePrompt = () => {
             });
             console.log(response);
             if (response.ok) {
-                revalidatePath("/");
-                revalidatePath("/profile");
                 router.push("/");
             }
         } catch (error) {
