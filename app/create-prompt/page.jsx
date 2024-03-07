@@ -14,7 +14,6 @@ const CreatePrompt = () => {
 
     useEffect(() => {
         if (!session) {
-            revalidatePath("/");
             redirect("/");
         }
     }, [session, router]);
@@ -37,6 +36,7 @@ const CreatePrompt = () => {
             });
             console.log(response);
             if (response.ok) {
+                revalidatePath("/");
                 router.push("/");
             }
         } catch (error) {

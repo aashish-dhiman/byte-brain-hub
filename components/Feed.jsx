@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Card from "./Card";
+import { revalidatePath } from "next/cache";
 
 const CardList = ({ data, handleTagClick }) => {
     return (
@@ -30,10 +31,10 @@ const Feed = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             const response = await fetch("/api/prompt", {
-                cache: "no-store",
+                cache: "no-cache",
             });
             const data = await response.json();
-
+            revalidatePath("/");
             setAllPosts(data);
             setIsLoading(false);
         };
