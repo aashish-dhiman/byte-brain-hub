@@ -4,12 +4,26 @@ import { connectDB } from "@utils/database";
 export const dynamic = "force-dynamic";
 export const GET = async (request, { params }) => {
     try {
-        await connectDB();
+        const prompts = await Prompt.find().populate({
+            path: "creator",
+        });
 
-        const prompt = await Prompt.findById(params.id).populate("creator");
-        if (!prompt) return new Response("Prompt Not Found", { status: 404 });
+        const response = new Response(JSON.stringify(prompts), {
+            status: 200,
+        });
 
-        return new Response(JSON.stringify(prompt), { status: 200 });
+        // Add a unique identifier to the URL to force a cache-busting reload
+        const url = new URL(request.url);
+        url.searchParams.set("t", Date.now());
+        response.headers.set(
+            "Cache-Control",
+            "no-cache, no-store, must-revalidate"
+        );
+        response.headers.set("Pragma", "no-cache");
+        response.headers.set("Expires", "0");
+        response.headers.set("Location", url.toString());
+
+        return response;
     } catch (error) {
         return new Response("Internal Server Error", { status: 500 });
     }
